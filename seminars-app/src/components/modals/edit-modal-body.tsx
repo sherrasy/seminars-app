@@ -31,7 +31,7 @@ const EditModalBody = observer(({ handleCloseModal }: EditModalBodyProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     clearErrors,
   } = useForm<SeminarForm>({
     mode: 'onBlur',
@@ -102,9 +102,9 @@ const EditModalBody = observer(({ handleCloseModal }: EditModalBodyProps) => {
               })}
             />
           </label>
-          {errors.title && (
+          {errors.description && (
             <p className='text-sm text-amber-600 relative h-px self-end m-0 bottom-3.5'>
-              {errors.title.message}
+              {errors.description.message}
             </p>
           )}
           <label className='flex justify-between items-center gap-5 '>
@@ -141,7 +141,7 @@ const EditModalBody = observer(({ handleCloseModal }: EditModalBodyProps) => {
           )}
           <button
             type='submit'
-            disabled={isPosting}
+            disabled={!isValid||isPosting}
             className='px-2 py-1 text-sm bg-amber-600 border-2 border-amber-900 rounded-lg hover:bg-amber-500 hover:cursor-pointer disabled:cursor-default disabled:bg-neutral-200 '
           >
             Сохранить
