@@ -35,7 +35,7 @@ const Modal = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
   return (
     <dialog className='rounded-xl p-2 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' ref={modalRef} onKeyDown={handleKeyDown}>
       {hasCloseBtn && (
-        <button className='hover:text-neutral-700 relative left-[94%]' aria-label='modal-close-btn' onClick={handleCloseModal}>
+        <button className='hover:text-neutral-700 relative left-[92%] px-2' aria-label='modal-close-btn' onClick={handleCloseModal}>
           X
         </button>
       )}

@@ -1,7 +1,8 @@
-import { Seminar } from '../../types/card.interface';
+import { Seminar } from '../../types/seminar.interface';
 import Pen from '../../assets/pen.svg?react';
 import Trash from '../../assets/trash.svg?react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import seminarsStore from '../../store/seminars-data';
 
 type CardProps = {
   card: Seminar;
@@ -9,10 +10,12 @@ type CardProps = {
 };
 
 function Card({ card, handleOpenModal }: CardProps) {
-  const { title, description, date, time, photo } = card;
-
+  const { id, title, description, date, time, photo } = card;
+  const {setSeminarId} = seminarsStore;
+  const handleOpenEditModal=() => {handleOpenModal('edit'); setSeminarId(id)}
+  const handleOpenDeleteModal=() => {handleOpenModal('delete'); setSeminarId(id)}
   return (
-    <div className='border rounded-sm border-indigo-100 w-xs h-[11.875rem] md:w-sm p-2 md:p-4 relative'>
+    <div className='border rounded-sm border-indigo-100 w-xs h-[9.375rem] md:h-[11.875rem] md:w-sm p-2 md:p-4 relative'>
       <div className='flex items-center gap-x-[10px]  '>
         <div className='min-w-[6.25rem] md:min-w-[9.375rem] h-[6.0625rem] md:h-[9.125rem] border border-slate-300 rounded-md'>
           <LazyLoadImage
@@ -26,19 +29,19 @@ function Card({ card, handleOpenModal }: CardProps) {
             <h2 className='text-center font-bold text-base text-amber-600 w-[190px] truncate'>
               {title}
             </h2>
-            <p className='text-center text-sm mb-2 text-neutral-600'>
+            <p className='text-center text-sm mb-1 text-neutral-600 border-b'>
               {date} {time}
             </p>
-            <p className='border-t py-2 text-neutral-900 text-sm max-h-[98px] overflow-auto'>{description}</p>
+            <p className=' my-1 text-neutral-900 text-sm max-h-[58px] md:max-h-[98px] overflow-auto'>{description}</p>
           </div>
-          <div className='flex gap-x-[10px] absolute md:bottom-1 right-1'>
+          <div className='flex gap-x-[10px] absolute bottom-1 right-1'>
             <Pen
               className='size-6 p-1 border rounded-sm border-indigo-100 hover:cursor-pointer hover:bg-indigo-100 bg-indigo-50'
-              onClick={() => handleOpenModal('edit')}
+              onClick={handleOpenEditModal}
             />
             <Trash
               className='size-6 p-1 border rounded-sm border-indigo-100 hover:cursor-pointer hover:bg-indigo-100 bg-indigo-50'
-              onClick={() =>  handleOpenModal('delete')}
+              onClick={handleOpenDeleteModal}
             />
           </div>
         </div>

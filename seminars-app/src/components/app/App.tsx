@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CardList from '../card-list/card-list';
 import DeleteModalBody from '../modals/delete-modal-body';
 import EditModalBody from '../modals/edit-modal-body';
 import Modal from '../modals/modal';
-import seminarsStore from '../../store/seminars-data';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,8 +15,6 @@ function App() {
     setIsModalOpen(false);
     setModalType('');
   };
-
-  useEffect(()=>{seminarsStore.fetchSeminars()},[])
 
   return (
     <div className='w-screen h-dvh flex flex-col items-center bg-slate-50 p-10'>

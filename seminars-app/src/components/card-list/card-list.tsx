@@ -8,13 +8,13 @@ type CardListProps = {
 };
 
 const CardList = observer(({ handleOpenModal }: CardListProps) => {
-  const { isLoading, seminars, hasError } = seminarsStore;
-
+  const { isLoading, seminars, hasLoadingError } = seminarsStore;
+  
   if (isLoading) {
     return <Loader />;
   }
 
-  if (hasError) {
+  if (hasLoadingError) {
     return (
       <p className='text-red-900 text-2xl self-center'>
         Ошибка загрузки семинаров
@@ -31,7 +31,7 @@ const CardList = observer(({ handleOpenModal }: CardListProps) => {
   }
 
   return (
-    <div className='flex flex-wrap gap-10 justify-center'>
+    <div className=' w-full gap-10 grid justify-center grid-cols-[repeat(auto-fit,w-xs)] md:grid-cols-[repeat(auto-fit,384px)]'>
       {seminars.map((card) => (
         <Card key={card.id} card={card} handleOpenModal={handleOpenModal} />
       ))}
