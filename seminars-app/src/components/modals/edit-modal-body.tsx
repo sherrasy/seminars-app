@@ -1,14 +1,15 @@
+import { observer } from 'mobx-react';
 import { useEffect, useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import seminarsStore from '../../store/seminars-data';
 import { SeminarForm } from '../../types/seminar-form.interface';
-import { observer } from 'mobx-react';
+import { AppMessage, FormFieldName, LabelName } from '../../utils/constant';
 
 type EditModalBodyProps = {
-  handleCloseModal:()=>void;
-}
+  handleCloseModal: () => void;
+};
 
-const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
+const EditModalBody = observer(({ handleCloseModal }: EditModalBodyProps) => {
   const { updateSeminar, getCurrentSeminar, isPosting, hasError } =
     seminarsStore;
   const seminar = getCurrentSeminar();
@@ -16,7 +17,7 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
     return (
       <div className='text-red-900 text-xl text-center h-20 leading-16'>
         <span className='inline-block align-middle leading-normal w-2/3'>
-          Ошибка загрузки данных
+          {AppMessage.ErrorLoadingSeminar}
         </span>
       </div>
     );
@@ -40,7 +41,7 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleSeminarSubmit: SubmitHandler<SeminarForm> = async({
+  const handleSeminarSubmit: SubmitHandler<SeminarForm> = async ({
     title,
     description,
     date,
@@ -49,7 +50,7 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
     const [year, month, day] = date.split('-');
     const newDate = `${day}.${month}.${year}`;
     await updateSeminar({ title, description, date: newDate, time });
-    if(!hasError){
+    if (!hasError) {
       handleCloseModal();
     }
   };
@@ -74,13 +75,13 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
       <form onSubmit={handleSubmit(handleSeminarSubmit)}>
         <div className='flex flex-col gap-5'>
           <label className='flex justify-between items-center gap-5 '>
-            <span className='text-amber-600'>Название</span>
+            <span className='text-amber-600'>{LabelName.Title}</span>
             <input
               placeholder='Название семинара'
               className='bg-transparent p-1.5 border-b-neutral-600 border-[none] border-b border-solid w-[12.0625rem]'
               type='text'
               autoComplete='off'
-              {...register('title', {
+              {...register(FormFieldName.Title, {
                 required: 'Заполните поле',
               })}
             />
@@ -91,12 +92,12 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
             </p>
           )}
           <label className='flex justify-between items-center gap-5 '>
-            <span className='text-amber-600'>Описание</span>
+            <span className='text-amber-600'>{LabelName.Description}</span>
             <textarea
               placeholder='Описание семинара'
               className='bg-transparent p-1.5 border-b-neutral-600 border-[none] border-b border-solid w-[12.0625rem] resize-none'
               autoComplete='off'
-              {...register('description', {
+              {...register(FormFieldName.Description, {
                 required: 'Заполните поле',
               })}
             />
@@ -107,12 +108,12 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
             </p>
           )}
           <label className='flex justify-between items-center gap-5 '>
-            <span className='text-amber-600'>Дата</span>
+            <span className='text-amber-600'>{LabelName.Date}</span>
             <input
               className='bg-transparent p-1.5 border-b-neutral-600 border-[none] border-b border-solid w-[12.0625rem]'
               type='date'
               autoComplete='off'
-              {...register('date', {
+              {...register(FormFieldName.Date, {
                 required: 'Заполните поле',
               })}
             />
@@ -123,12 +124,12 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
             </p>
           )}
           <label className='flex justify-between items-center gap-5 '>
-            <span className='text-amber-600'>Время</span>
+            <span className='text-amber-600'>{LabelName.Time}</span>
             <input
               className='bg-transparent p-1.5 border-b-neutral-600 border-[none] border-b border-solid w-[12.0625rem]'
               type='time'
               autoComplete='off'
-              {...register('time', {
+              {...register(FormFieldName.Time, {
                 required: 'Заполните поле',
               })}
             />
@@ -147,7 +148,7 @@ const EditModalBody = observer(({handleCloseModal}:EditModalBodyProps) => {
           </button>
           {hasError && (
             <p className='text-sm text-red-900 relative h-px self-end m-0 bottom-3.5'>
-              Ошибка обновления данных. Попробуйте снова
+              {AppMessage.ErrorUpdate}
             </p>
           )}
         </div>

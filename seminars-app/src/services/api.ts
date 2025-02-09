@@ -4,11 +4,12 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
+import { ApiConnectParam } from '../utils/constant';
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
-    baseURL: 'http://localhost:3000/seminars',
-    timeout: 5000,
+    baseURL: ApiConnectParam.Url,
+    timeout: ApiConnectParam.Timeout,
   });
 
   api.interceptors.request.use((config: InternalAxiosRequestConfig) => config);

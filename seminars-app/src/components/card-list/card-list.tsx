@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react';
+import seminarsStore from '../../store/seminars-data';
 import Card from '../card/card';
 import Loader from '../loader/loader';
-import seminarsStore from '../../store/seminars-data';
+import { AppMessage } from '../../utils/constant';
 
 type CardListProps = {
   handleOpenModal: (type: string) => void;
@@ -17,7 +18,7 @@ const CardList = observer(({ handleOpenModal }: CardListProps) => {
   if (hasLoadingError) {
     return (
       <p className='text-red-900 text-2xl self-center'>
-        Ошибка загрузки семинаров
+        {AppMessage.ErrorLoadingList}
       </p>
     );
   }
@@ -25,7 +26,7 @@ const CardList = observer(({ handleOpenModal }: CardListProps) => {
   if (!seminars || seminars.length === 0) {
     return (
       <p className='text-amber-900 text-2xl self-center'>
-        Нет данных о семинарах
+        {AppMessage.EmptyList}
       </p>
     );
   }

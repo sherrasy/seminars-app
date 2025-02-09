@@ -25,8 +25,8 @@ function App() {
         onClose={() => handleCloseModal()}
         hasCloseBtn={true}
       >
-        {modalType === 'delete' && <DeleteModalBody />}
-        {modalType === 'edit' && <EditModalBody />}
+        {modalType === 'delete' && <DeleteModalBody handleCloseModal={handleCloseModal}/>}
+        {modalType === 'edit' && <EditModalBody handleCloseModal={handleCloseModal} />}
       </Modal>
     </div>
   );

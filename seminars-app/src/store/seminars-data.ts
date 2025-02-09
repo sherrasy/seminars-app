@@ -1,8 +1,8 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import { Seminar } from '../types/seminar.interface';
-import { createAPI } from '../services/api';
 import { AxiosInstance } from 'axios';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { UpdateSeminarDto } from '../dto/update-seminar.dto';
+import { createAPI } from '../services/api';
+import { Seminar } from '../types/seminar.interface';
 
 const api: AxiosInstance = createAPI();
 
@@ -22,8 +22,10 @@ class SeminarsStore {
   };
 
   getCurrentSeminar = () => {
-    if(this.seminars && this.seminarId){
-      const currentSeminar = this.seminars.find((seminar) => seminar.id === this.seminarId);;
+    if (this.seminars && this.seminarId) {
+      const currentSeminar = this.seminars.find(
+        (seminar) => seminar.id === this.seminarId
+      );
       return currentSeminar || null;
     }
     return null;
@@ -55,7 +57,9 @@ class SeminarsStore {
       await api.delete(`/${this.seminarId}`);
       runInAction(() => {
         if (this.seminars) {
-          this.seminars = this.seminars.filter((seminar) => seminar.id !== this.seminarId);
+          this.seminars = this.seminars.filter(
+            (seminar) => seminar.id !== this.seminarId
+          );
         }
         this.isPosting = false;
       });
@@ -68,7 +72,7 @@ class SeminarsStore {
     }
   };
 
-  updateSeminar = async (dto:UpdateSeminarDto) => {
+  updateSeminar = async (dto: UpdateSeminarDto) => {
     this.isPosting = true;
     this.hasError = false;
     try {
@@ -78,7 +82,7 @@ class SeminarsStore {
           const seminarIndex = this.seminars.findIndex(
             (item) => item.id === data.id
           );
-          this.seminars[seminarIndex] = {...data};
+          this.seminars[seminarIndex] = { ...data };
         }
         this.isPosting = false;
       });

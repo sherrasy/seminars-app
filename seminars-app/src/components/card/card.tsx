@@ -1,8 +1,8 @@
-import { Seminar } from '../../types/seminar.interface';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Pen from '../../assets/pen.svg?react';
 import Trash from '../../assets/trash.svg?react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import seminarsStore from '../../store/seminars-data';
+import { Seminar } from '../../types/seminar.interface';
 
 type CardProps = {
   card: Seminar;
